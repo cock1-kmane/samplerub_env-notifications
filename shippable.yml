@@ -20,6 +20,11 @@ build:
   ci:
     - ruby -v
     
+  pre_ci_boot:
+      image_name: shippable/minv2
+      image_tag: prod
+      pull: true
+    
 env:
   global:
     - TOO=toto
