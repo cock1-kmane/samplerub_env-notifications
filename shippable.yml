@@ -41,6 +41,9 @@ matrix:
   exclude:
     - rvm: "2.1.4"
     - rvm: "2.1.5"
+    
+  allow_failures:
+    - rvm: "2.0.0"
 
 integrations:
   notifications:
