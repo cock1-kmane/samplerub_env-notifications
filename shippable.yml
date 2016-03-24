@@ -2,20 +2,81 @@ language: ruby
 
 # Version number
 rvm:
-  - 1.8.7
-  - 1.9.2
-  - 1.9.3
-  - 2.0.0
-  - 2.1.2
+ # - 1.8.7
+  #- 1.9.2
+  #- 1.9.3
+  #- 2.0.0
+  #- 2.1.2
   - 2.1.3
   - 2.1.4
   - 2.1.5
-  - 2.2.0
-  - 2.2.1
+  #- 2.2.0
+  #- 2.2.1
   - jruby-1.7.19
-  - jruby-9.0.0
+  #- jruby-9.0.0
 #  - ree
 
 build:
   ci:
     - ruby -v
+    
+  pre_ci_boot:
+      image_name: drydock/u14ruball
+      image_tag: prod
+      pull: true
+    
+env:
+  global:
+    - TOO=toto
+    - GOO=gogo
+  
+  matrix:
+    - a1=b1
+    - z1=a1
+    
+matrix:
+  include:
+    - rvm: "1.9.3"
+      env:
+        - key1=aaa
+        - key3=bbbb
+    - rvm: "2.0.0"
+      env: t2&=test
+      
+  exclude:
+    - rvm: "2.1.4"
+    - rvm: "2.1.5"
+    
+  allow_failures:
+    - rvm: "2.0.0"
+
+integrations:
+  notifications:
+    - integrationName: email
+      type: email
+      recipients: 
+        - shiphitchcock1@gmail.com
+        - varsha@shippable.com
+      on_start: always
+      on_success: change
+      on_failure: change
+      on_pull_request: always
+      
+    - integrationName: ship-slack
+      type: slack
+      recipients:
+        - "#hitchcock1-public"
+        - pvt-channel
+      on_start: always
+      on_success: change
+      on_failure: change
+      on_pull_request: always
+      
+    - integrationName: irc
+      type: irc
+      recipients:
+        - "chat.freenode.net#test-cock1"
+      on_start: always
+      on_success: change
+      on_failure: change      
+      on_pull_request: always 
